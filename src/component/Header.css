@@ -1,0 +1,36 @@
+header {
+  background-color: #19a8e3;
+}
+
+h1 {
+  padding: 20px;
+  font-size: 25px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+align-items:center;
+
+}
+
+.flex {
+  display: flex;
+}
+
+.main-list {
+  padding: 20px;
+  font-size: 19px;
+}
+
+.main-link:hover {
+  background-color: rgb(21, 2, 79);
+  box-shadow: 0 0 5px rgb(21, 2, 79);
+  border-radius: 5px;
+}
+.main-link.active
+{
+    background-color: rgb(21, 2, 79);
+  box-shadow: 0 0 5px rgb(21, 2, 79);
+  border-radius: 5px;
+}

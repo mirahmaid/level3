@@ -1,0 +1,17 @@
+/* ==============================
+     Animation for bigger screen
+=============================== */
+span {
+  animation: heart 2s infinite linear;
+}
+
+@keyframes heart {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
