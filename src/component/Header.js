@@ -16,8 +16,7 @@ export default function Header() {
   className="theme"
   onClick={() => changeTheme(theme === "light" ? "dark" : "light")}
 >
-  <FaRegSun />
-  <FaMoon />
+  {theme === "light" ? <FaMoon /> : <FaRegSun />}
 </button>
     <ul className="flex">
       <li className="main-list">
