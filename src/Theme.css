@@ -12,26 +12,38 @@
   font-size: 1.2rem;
   transition: all 0.3s ease;
 }
-
-
 .theme:hover {
   background-color: rgba(255, 255, 255, 0.15);
   transform: rotate(20deg);
 }
-
-
 .theme:active {
   transform: scale(0.95);
 }
-.dark{
-background-color:black;
-color:white;
-min-height: 100vh;
+.light {
+  background-color: white;
+  color: black;
+  min-height: 100vh;
 }
-.dark main {
-  color:white;
+.dark {
+  background-color: #111;
+  color: white;
+  min-height: 100vh;
 }
-.dark h2 {
-  color:white;
+.light .hero-text,
+.light .hero-text h2,
+.light .hero-text p,
+.light .page-content {
+  color: black;
 }
-
+.dark .hero-text,
+.dark .hero-text h2,
+.dark .hero-text p,
+.dark .page-content {
+  color: white;
+}
+.light .page-content {
+  background-color: antiquewhite;
+}
+.dark .page-content {
+  background-color: #111;
+}

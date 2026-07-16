@@ -1,30 +1,24 @@
 .hero-section {
   min-height: calc(100vh - 160px);
   display: flex;
-  align-items: center;        
+  align-items: center;
   justify-content: space-between;
   gap: 50px;
   padding: 0 120px;
+  font-family: "Poppins", sans-serif;
 }
-
 .hero-text {
   width: 50%;
-  color: #000;
 }
-
 .hero-text h2 {
   font-size: 45px;
   font-weight: 800;
   margin-bottom: 20px;
-  color: #000;
 }
-
 .hero-text p {
   font-size: 22px;
-  color: #444;
   margin-bottom: 30px;
 }
-
 .hero-btn {
   display: inline-block;
   padding: 14px 35px;
@@ -34,32 +28,22 @@
   border-radius: 8px;
   transition: 0.3s;
 }
-
 .hero-btn:hover {
   background-color: rgb(21, 2, 79);
   transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-
 .hero-img {
   width: 45%;
   max-height: 70vh;
   object-fit: cover;
   border-radius: 15px;
 }
-
-.hero-text,
-.hero-text h2,
-.hero-text p,
-.hero-btn {
-  font-family: "Poppins", sans-serif;
-}
-.page-content{
+.page-content {
   min-height: calc(100vh - 135px);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
   font-weight: 500;
   background-color: antiquewhite;
   font-size: 40px;

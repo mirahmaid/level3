@@ -2,7 +2,8 @@ import { createContext, useReducer } from "react";
 const Data= createContext();
 
 
-const initialData = { theme: "light" };
+const initialData = { theme: localStorage.getItem("theme") === null?"light"
+  :localStorage.getItem("theme" )};
 const reducer = (firstState,action) => {
   switch(action.type){
 
@@ -40,7 +41,9 @@ const [firstState, dispatch] = useReducer(reducer, initialData);
 
 
 const changeTheme = (newTheme) => {
-dispatch({ type: "CHANGE_THEME", newValue: newTheme });
+localStorage.setItem("theme",newTheme)
+
+  dispatch({ type: "CHANGE_THEME", newValue: newTheme });
 };
 return (
 <Data.Provider value={{ ...firstState, changeTheme}}>
