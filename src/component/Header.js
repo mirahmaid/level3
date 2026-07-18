@@ -4,8 +4,12 @@ import { FaRegSun ,FaMoon} from "react-icons/fa";
 import '../Theme.css'
 import {useContext } from "react";
 import Data from "../context/Data";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import {auth}from "../firebase/Config"
+
 export default function Header() {
-      const {theme,changeTheme} = useContext(Data);              
+    const [user, loading, error] = useAuthState(auth);
+    const {theme,changeTheme} = useContext(Data);              
   
   return (
     <div>
@@ -19,16 +23,16 @@ export default function Header() {
   {theme === "light" ? <FaMoon /> : <FaRegSun />}
 </button>
     <ul className="flex">
-        <li className="main-list">
+        {!user &&<li className="main-list">
         <NavLink className="main-link" to="/Signin">
           sign in
         </NavLink>
-      </li>
-        <li className="main-list">
+      </li>}
+        {!user &&<li className="main-list">
         <NavLink className="main-link" to="/Signup">
           sign uo
         </NavLink>
-      </li>
+      </li>}
       <li className="main-list">
         <NavLink className="main-link" to="/Basic">
           Basics
