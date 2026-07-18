@@ -19,6 +19,16 @@ export default function Header() {
   {theme === "light" ? <FaMoon /> : <FaRegSun />}
 </button>
     <ul className="flex">
+        <li className="main-list">
+        <NavLink className="main-link" to="/Signin">
+          sign in
+        </NavLink>
+      </li>
+        <li className="main-list">
+        <NavLink className="main-link" to="/Signup">
+          sign uo
+        </NavLink>
+      </li>
       <li className="main-list">
         <NavLink className="main-link" to="/Basic">
           Basics

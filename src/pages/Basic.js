@@ -1,14 +1,17 @@
-import Content from "../component/Content";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
+import { Helmet } from "react-helmet-async";
 
 export default function Basic() {
   return (
     <>
-  <Header/>
-  <Content data ="Basic"/>
-<Footer/>
-</>
-  )
-}
+      <Helmet>
+        <title>Web Dev Roadmap - Basics</title>
+      </Helmet>
 
+      <Header />
+
+      <Footer />
+    </>
+  );
+}

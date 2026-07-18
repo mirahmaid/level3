@@ -5,8 +5,18 @@ import Framework from "./pages/Frameworks";
 import Tips from "./pages/Tips";
 import { useContext } from "react";
 import Data from "./context/Data";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 const router = createBrowserRouter([
+    {
+    path: "/Signin",
+    element: <SignIn />,
+  },
+    {
+    path: "/Signup",
+    element: <SignUp />,
+  },
   {
     path: "/",
     element: <Home />,
