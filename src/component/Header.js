@@ -6,6 +6,7 @@ import {useContext } from "react";
 import Data from "../context/Data";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {auth}from "../firebase/Config"
+import { signOut } from "firebase/auth";
 
 export default function Header() {
     const [user, loading, error] = useAuthState(auth);
@@ -33,22 +34,37 @@ export default function Header() {
           sign uo
         </NavLink>
       </li>}
-      <li className="main-list">
+      {user && <li className="main-list">
         <NavLink className="main-link" to="/Basic">
           Basics
         </NavLink>
-      </li>
-      <li className="main-list">
+      </li>}
+    {user && <li className="main-list">
         <NavLink className="main-link" to="/Frameworks">
           Frameworks
         </NavLink>
-      </li>
-      <li className="main-list">
+      </li>}
+      {user &&<li className="main-list">
         <NavLink className="main-link" to="/Tips">
           {" "}
           Tips{" "}
         </NavLink>
-      </li>
+      </li>}
+      
+     {user && <li onClick ={(params) => {
+       signOut(auth).then(() => {
+        console.log("success sign out")
+  // Sign-out successful.
+}).catch((error) => {
+  console.log("fail sign out")
+});
+     }
+     }
+     className="main-list">
+        <NavLink className="main-link" >
+          sign out
+        </NavLink>
+      </li>}
     </ul>
   </header>    
     </div>
