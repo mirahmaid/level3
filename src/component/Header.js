@@ -31,7 +31,7 @@ export default function Header() {
       </li>}
         {!user &&<li className="main-list">
         <NavLink className="main-link" to="/Signup">
-          sign uo
+          sign up
         </NavLink>
       </li>}
       {user && <li className="main-list">
