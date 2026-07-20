@@ -4,6 +4,8 @@ import { Helmet } from "react-helmet-async";
 import { Link, NavLink } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {auth}from "../firebase/Config"
+import { Navigate} from "react-router";
+
 import { useState } from 'react';
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -33,7 +35,10 @@ export default function SignUp() {
               createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                 
+                
+                
                   const user = userCredential.user;
+                  Navigate("/");
                   console.log("success")
                 })
                 .catch((error) => {
