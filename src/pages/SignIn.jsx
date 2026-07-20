@@ -10,7 +10,9 @@ import { Navigate} from "react-router";
 export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-  
+      const [errorr, setErrorr] = useState(false);
+      const [MessageError, setMessageError] = useState("");
+
   return (
     <div >
       <Helmet>
@@ -43,13 +45,16 @@ export default function SignIn() {
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-  
+  setErrorr(true);
+  setMessageError(errorMessage);
       console.log(errorMessage)
 
   });
                 }
                 }>Sign in</button>
-                <p className='account'><Link to ="/Signup">Sign up</Link></p>
+                <p className='account'><Link to ="/Signup">Sign up</Link>
+                </p>
+                {errorr && <p>{MessageError}</p>}
               </form>
             </main>
             <Footer />
