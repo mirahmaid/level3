@@ -46,8 +46,28 @@ export default function SignIn() {
     const errorCode = error.code;
     const errorMessage = error.message;
   setErrorr(true);
-  setMessageError(errorMessage);
-      console.log(errorMessage)
+    switch(errorCode){
+      case  "auth/invalid-email":
+     setMessageError("wrong email")
+      break;  
+        case  "auth/invalid-credential":
+            setMessageError("wrong password")
+
+      break;  
+        case  "auth/too-many-requests":
+            setMessageError("try later")
+
+      break;  
+        case  "auth/missing-password":
+            setMessageError("enter password")
+
+      break; 
+      default:
+              setMessageError("enter password")
+
+    }
+//  setMessageError(errorCode);
+  //    console.log(errorMessage)
 
   });
                 }

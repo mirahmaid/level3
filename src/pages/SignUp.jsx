@@ -10,6 +10,8 @@ import { useState } from 'react';
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+        const [errorr, setErrorr] = useState(false);    
+  const [MessageError, setMessageError] = useState("");
 
   return (
     <div>
@@ -44,9 +46,32 @@ export default function SignUp() {
                 .catch((error) => {
                   const errorCode = error.code;
                   const errorMessage = error.message;
-                console.log("error")
-                console.log(errorCode)
-                console.log(errorMessage)
+                  setErrorr(true);
+                    switch(errorCode){
+      case  "auth/invalid-email":
+     setMessageError("wrong email")
+      break;  
+        case  "auth/invalid-credential":
+            setMessageError("wrong password")
+
+      break;  
+        case  "auth/too-many-requests":
+            setMessageError("try later")
+
+      break;  
+        case  "auth/missing-password":
+            setMessageError("enter password")
+
+      break; 
+        case  "auth/weak-password":
+            setMessageError("weak password")
+
+      break;
+      default:
+              setMessageError("enter password")
+
+    }
+              
                 });
             }}
           >
@@ -55,6 +80,7 @@ export default function SignUp() {
           <p className="account">
             <Link to="/Signin">Sign in</Link>
           </p>
+        {errorr && <p>{MessageError}</p>}
         </form>
       </main>{" "}
       <Footer />
