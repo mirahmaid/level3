@@ -5,9 +5,9 @@ import { Link ,NavLink} from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth}from "../firebase/Config"
 import { useState } from 'react';
-import { Navigate} from "react-router";
-
+import { useNavigate } from "react-router-dom";
 export default function SignIn() {
+  const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
       const [errorr, setErrorr] = useState(false);
@@ -34,11 +34,13 @@ export default function SignIn() {
               required placeholder = 'password' type = 'password'/>
                 <button onClick ={(eo) => {
                   eo.preventDefault()
+                  console.log(email);
+console.log(password);
                   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     
     const user = userCredential.user;
-    Navigate("/");
+navigate("/");
     console.log("sign in")
 
   })

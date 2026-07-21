@@ -4,10 +4,10 @@ import { Helmet } from "react-helmet-async";
 import { Link, NavLink } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {auth}from "../firebase/Config"
-import { Navigate} from "react-router";
-
+import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 export default function SignUp() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
         const [errorr, setErrorr] = useState(false);    
@@ -40,12 +40,14 @@ export default function SignUp() {
                 
                 
                   const user = userCredential.user;
-                  Navigate("/");
+                  navigate("/");
                   console.log("success")
                 })
-                .catch((error) => {
-                  const errorCode = error.code;
-                  const errorMessage = error.message;
+              .catch((error) => {
+  console.log("ERROR CODE:", error.code);
+  console.log("ERROR MESSAGE:", error.message);
+
+  const errorCode = error.code;
                   setErrorr(true);
                     switch(errorCode){
       case  "auth/invalid-email":
