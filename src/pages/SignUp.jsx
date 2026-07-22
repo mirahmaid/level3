@@ -6,12 +6,16 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {auth}from "../firebase/Config"
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import { updateProfile } from "firebase/auth";
+
 export default function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
         const [errorr, setErrorr] = useState(false);    
   const [MessageError, setMessageError] = useState("");
+    const [userName, setUserName] = useState("");
+
 
   return (
     <div>
@@ -21,7 +25,13 @@ export default function SignUp() {
       <Header />
       <main>
         <form>
+          <p>create a new account</p>
           <input onChange = {(eo) => {
+            setUserName (eo.target.value)
+          }
+          }
+          required placeholder="username" type="text" />
+            <input onChange = {(eo) => {
             setEmail (eo.target.value)
           }
           }
@@ -38,6 +48,16 @@ export default function SignUp() {
                 .then((userCredential) => {
               
                   const user = userCredential.user;
+                const auth = getAuth();
+updateProfile(auth.currentUser, {
+  displayName: "userName", photoURL: "https://example.com/jane-q-user/profile.jpg"
+}).then(() => {
+  // Profile updated!
+  // ...
+}).catch((error) => {
+  // An error occurred
+  // ...
+});
                   navigate("/");
                   console.log("success")
                 })

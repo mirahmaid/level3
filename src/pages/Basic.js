@@ -22,7 +22,7 @@ export default function Basic() {
       </Helmet>
 
       <Header />
-
+      <main className="page-content"> welcome {user.displayName}</main>
       <Footer />
     </>
   );
