@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {auth}from "../firebase/Config"
-
+import moment from "moment";
 export default function Basic() {
         const [user, loading, error] = useAuthState(auth);
   
@@ -22,7 +22,14 @@ export default function Basic() {
       </Helmet>
 
       <Header />
-      <main className="page-content"> welcome {user.displayName}</main>
+<main className="page-content">
+  <h3>Welcome {user.displayName}</h3>
+
+  <p>
+    <strong>Account Created:</strong>{" "}
+    {moment(user.metadata.creationTime).fromNow()}
+  </p>
+</main>
       <Footer />
     </>
   );
