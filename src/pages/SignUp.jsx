@@ -36,9 +36,7 @@ export default function SignUp() {
               eo.preventDefault()
               createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                
-                
-                
+              
                   const user = userCredential.user;
                   navigate("/");
                   console.log("success")

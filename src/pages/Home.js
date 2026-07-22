@@ -36,7 +36,7 @@ export default function Home() {
         </main>}
 {!user &&
 <main className ='auth'>
-  <p><Link>sign in </Link> to continue</p>
+  <p><Link to ="/Signin">sign in </Link> to continue</p>
 </main> }
         <Footer />
       </div>
