@@ -34,3 +34,6 @@ align-items:center;
   box-shadow: 0 0 5px rgb(21, 2, 79);
   border-radius: 5px;
 }
+.signout{
+  all:unset;
+}

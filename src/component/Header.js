@@ -83,10 +83,11 @@ export default function Header() {
                     console.log("fail sign out");
                   });
               }}
-            >
-              <span className="main-link">
+            
+              className="main-list">
+              <button className="main-link signout">
                 sign out
-              </span>
+              </button>
             </li>
           )}
 
