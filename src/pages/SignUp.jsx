@@ -12,6 +12,7 @@ import { auth } from "../firebase/Config";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect } from 'react';
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -23,7 +24,15 @@ export default function SignUp() {
   const [userName, setUserName] = useState("");
 
   const [user, loading, error] = useAuthState(auth);
-
+useEffect(() => {
+    if (user){
+      if(user.emailVerified){  
+    navigate("/")
+      }
+  }
+  
+},[]
+  )
   if (loading) {
     return (
       <div>
