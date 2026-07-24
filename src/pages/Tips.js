@@ -62,7 +62,6 @@ export default function Tips() {
         </Helmet>
   
         <Header />
-  <Content data ="Tips"/>
         <Footer />
       </>
     );

@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {auth}from "../firebase/Config"
 import moment from "moment";
+import {deleteUser } from "firebase/auth";
+
 export default function Basic() {
         const [user, loading, error] = useAuthState(auth);
   
@@ -14,9 +16,11 @@ export default function Basic() {
     if (!user && !loading){
     navigate("/")
   }
+  if(user){
   if(!user.emailVerified){
           navigate("/")
         }
+      }
 },[]
   )
   if (loading) {
@@ -64,7 +68,20 @@ export default function Basic() {
   {moment(user.metadata.lastSignInTime).fromNow()}
 
   </p>
-  <button className ="delete">Delete account</button>
+  <button className ="delete"
+  onClick={() => {
+    deleteUser(user).then(() => {
+  // User deleted.
+  console.log("user deleted")
+}).catch((error) => {
+  // An error ocurred
+  // ...
+  console.log("error")
+});
+  }
+  }>Delete account</button>
+
+
 </div>
 </main>
       <Footer />
