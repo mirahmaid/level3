@@ -4,11 +4,70 @@ import { Helmet } from "react-helmet-async";
 import "../component/Content.css";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link ,NavLink} from "react-router-dom";
-
+import {  sendEmailVerification} from "firebase/auth";
 import {auth}from "../firebase/Config"
 export default function Home() {
       const [user, loading, error] = useAuthState(auth);
+    if (loading) {
+      return (
+        <div>
+          <Header />
+          <main>
+            <p>Initialising User...</p>
+          </main>
+          <Footer />
+        </div>
+      );
+    }
+  if (error) {
+    return (
+      <div>
+        <Header />
+        <main>
+          <p>Error: {error.message}</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+  if(!user){
+return(
+<div>
+  <header/>
   
+<main className ='auth'>
+  <p><Link to ="/Signin">sign in </Link> to continue</p>
+</main> 
+<footer/>
+
+</div>
+)
+
+  }
+  if(user){
+    if(!user.emailVerified){
+return (
+      <div>
+        <Header />
+        <main>
+          <p>We sent you an email to verify your account.</p>
+
+          <button
+            className="delete"
+            onClick={() => {
+              sendEmailVerification(auth.currentUser).then(() => {
+                console.log("Email sent again");
+              });
+            }}
+          >
+            Send Again
+          </button>
+        </main>
+        <Footer />
+      </div>
+    );
+    }
+    if(user.emailVerified){
   return (
     <>
       <Helmet>
@@ -34,12 +93,12 @@ export default function Home() {
             className="hero-img"
           />
         </main>}
-{!user &&
-<main className ='auth'>
-  <p><Link to ="/Signin">sign in </Link> to continue</p>
-</main> }
+
         <Footer />
       </div>
     </>
   );
+    }
+  }
+
 }

@@ -1,109 +1,181 @@
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { Helmet } from "react-helmet-async";
-import { Link, NavLink } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import {auth}from "../firebase/Config"
+import { Link } from "react-router-dom";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../firebase/Config";
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
-import { updateProfile } from "firebase/auth";
+import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function SignUp() {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-        const [errorr, setErrorr] = useState(false);    
+  const [errorr, setErrorr] = useState(false);
   const [MessageError, setMessageError] = useState("");
-    const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("");
 
+  const [user, loading, error] = useAuthState(auth);
 
+  if (loading) {
+    return (
+      <div>
+        <Header />
+        <main>
+          <p>Initialising User...</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+if (error) {
   return (
     <div>
-      <Helmet>
-        <title>Sign up page</title>
-      </Helmet>
       <Header />
       <main>
-        <form>
-          <p>create a new account</p>
-          <input onChange = {(eo) => {
-            setUserName (eo.target.value)
-          }
-          }
-          required placeholder="username" type="text" />
-            <input onChange = {(eo) => {
-            setEmail (eo.target.value)
-          }
-          }
-          required placeholder="email" type="email" />
-          <input onChange = {(eo) => {
-            setPassword (eo.target.value)
-          } 
-        }
-          required placeholder="password" type="password" />
-          <button
-            onClick={(eo) => {
-              eo.preventDefault()
-              createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-              
-                  const user = userCredential.user;
-                const auth = getAuth();
-updateProfile(auth.currentUser, {
-  displayName: "userName", photoURL: "https://example.com/jane-q-user/profile.jpg"
-}).then(() => {
-  // Profile updated!
-  // ...
-}).catch((error) => {
-  // An error occurred
-  // ...
-});
-                  navigate("/");
-                  console.log("success")
-                })
-              .catch((error) => {
-  console.log("ERROR CODE:", error.code);
-  console.log("ERROR MESSAGE:", error.message);
-
-  const errorCode = error.code;
-                  setErrorr(true);
-                    switch(errorCode){
-      case  "auth/invalid-email":
-     setMessageError("wrong email")
-      break;  
-        case  "auth/invalid-credential":
-            setMessageError("wrong password")
-
-      break;  
-        case  "auth/too-many-requests":
-            setMessageError("try later")
-
-      break;  
-        case  "auth/missing-password":
-            setMessageError("enter password")
-
-      break; 
-        case  "auth/weak-password":
-            setMessageError("weak password")
-
-      break;
-      default:
-              setMessageError("enter password")
-
-    }
-              
-                });
-            }}
-          >
-            Sign up
-          </button>
-          <p className="account">
-            <Link to="/Signin">Sign in</Link>
-          </p>
-        {errorr && <p>{MessageError}</p>}
-        </form>
-      </main>{" "}
+        <p>Error: {error.message}</p>
+      </main>
       <Footer />
     </div>
   );
+}
+  if (user && !user.emailVerified) {
+    return (
+      <div>
+        <Header />
+        <main>
+          <p>We sent you an email to verify your account.</p>
+
+          <button
+            className="delete"
+            onClick={() => {
+              sendEmailVerification(auth.currentUser).then(() => {
+                console.log("Email sent again");
+              });
+            }}
+          >
+            Send Again
+          </button>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div>
+        <Helmet>
+          <title>Sign up page</title>
+        </Helmet>
+
+        <Header />
+
+        <main>
+          <form>
+            <p>Create a new account</p>
+
+            <input
+              required
+              placeholder="Username"
+              type="text"
+              onChange={(eo) => {
+                setUserName(eo.target.value);
+              }}
+            />
+
+            <input
+              required
+              placeholder="Email"
+              type="email"
+              onChange={(eo) => {
+                setEmail(eo.target.value);
+              }}
+            />
+
+            <input
+              required
+              placeholder="Password"
+              type="password"
+              onChange={(eo) => {
+                setPassword(eo.target.value);
+              }}
+            />
+
+            <button
+              onClick={(eo) => {
+                eo.preventDefault();
+
+                createUserWithEmailAndPassword(auth, email, password)
+                  .then((userCredential) => {
+                    const authh = getAuth();
+
+                    updateProfile(authh.currentUser, {
+                      displayName: userName,
+                    }).then(() => {
+                      console.log("Profile Updated");
+                    });
+
+                    sendEmailVerification(authh.currentUser).then(() => {
+                      console.log("Verification Email Sent");
+                    });
+
+                    navigate("/");
+                  })
+
+                  .catch((error) => {
+                    console.log("ERROR CODE:", error.code);
+                    console.log("ERROR MESSAGE:", error.message);
+
+                    setErrorr(true);
+
+                    switch (error.code) {
+                      case "auth/invalid-email":
+                        setMessageError("Wrong email");
+                        break;
+
+                      case "auth/email-already-in-use":
+                        setMessageError("Email already in use");
+                        break;
+
+                      case "auth/weak-password":
+                        setMessageError("Weak password");
+                        break;
+
+                      case "auth/missing-password":
+                        setMessageError("Enter password");
+                        break;
+
+                      case "auth/too-many-requests":
+                        setMessageError("Try again later");
+                        break;
+
+                      default:
+                        setMessageError(error.message);
+                    }
+                  });
+              }}
+            >
+              Sign Up
+            </button>
+
+            <p className="account">
+              <Link to="/Signin">Sign In</Link>
+            </p>
+
+            {errorr && <p>{MessageError}</p>}
+          </form>
+        </main>
+
+        <Footer />
+      </div>
+    );
+  }
 }

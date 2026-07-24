@@ -11,10 +11,33 @@ export default function Basic() {
   
   let navigate = useNavigate();
   useEffect(() => {
-    if (!user){
+    if (!user && !loading){
     navigate("/")
   }},[]
   )
+  if (loading) {
+    return (
+      <div>
+        <header/>
+      <main> 
+        <p>Initialising User...</p>
+      </main> 
+    <footer/>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div>
+        <header/>
+        <main>
+        <p>Error: {error}</p>
+        </main>
+        <footer/>
+      </div>
+    );
+  }
+  if(user){
   return (
     <>
       <Helmet>
@@ -22,15 +45,24 @@ export default function Basic() {
       </Helmet>
 
       <Header />
-<main className="page-content">
+      <main>
+<div className="page-content">
   <h3>Welcome {user.displayName}</h3>
 
   <p>
     <strong>Account Created:</strong>{" "}
     {moment(user.metadata.creationTime).fromNow()}
   </p>
+  <p>
+
+  <strong>  last sign in </strong>{" "}
+  {moment(user.metadata.lastSignInTime).fromNow()}
+
+  </p>
+  <button className ="delete">Delete account</button>
+</div>
 </main>
       <Footer />
     </>
-  );
+  )};
 }
