@@ -13,7 +13,11 @@ export default function Basic() {
   useEffect(() => {
     if (!user && !loading){
     navigate("/")
-  }},[]
+  }
+  if(!user.emailVerified){
+          navigate("/")
+        }
+},[]
   )
   if (loading) {
     return (
@@ -38,6 +42,7 @@ export default function Basic() {
     );
   }
   if(user){
+    if (user.emailVerified){
   return (
     <>
       <Helmet>
@@ -64,5 +69,5 @@ export default function Basic() {
 </main>
       <Footer />
     </>
-  )};
+  )}};
 }

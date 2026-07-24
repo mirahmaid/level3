@@ -12,10 +12,39 @@ export default function Frameworks() {
   
   let navigate = useNavigate();
   useEffect(() => {
-    if (!user){
+    if (!user && !loading){
     navigate("/")
-  }},[]
+  }
+    if(!user.emailVerified){
+        navigate("/")
+      }
+},[]
   )
+    if (loading) {
+        return (
+          <div>
+            <Header />
+            <main>
+              <p>Initialising User...</p>
+            </main>
+            <Footer />
+          </div>
+        );
+      }
+    if (error) {
+      return (
+        <div>
+          <Header />
+          <main>
+            <p>Error: {error.message}</p>
+          </main>
+          <Footer />
+        </div>
+      );
+    }
+    if(user){
+    
+      if (user.emailVerified){
   return (
     <>
       <Helmet>
@@ -27,4 +56,7 @@ export default function Frameworks() {
       <Footer />
     </>
   );
+      }
+    }
+
 }
