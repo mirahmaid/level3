@@ -31,7 +31,7 @@ useEffect(() => {
       }
   }
   
-},[]
+},[user, navigate]
   )
   if (loading) {
     return (

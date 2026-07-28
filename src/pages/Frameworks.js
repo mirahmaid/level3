@@ -15,10 +15,10 @@ export default function Frameworks() {
     if (!user && !loading){
     navigate("/")
   }
-    if(!user.emailVerified){
-        navigate("/")
-      }
-},[]
+  if(user && !user.emailVerified){
+  navigate("/");
+}
+},[user, loading, navigate]
   )
     if (loading) {
         return (

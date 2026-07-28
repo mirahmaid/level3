@@ -21,27 +21,27 @@ export default function Basic() {
           navigate("/")
         }
       }
-},[]
+},[user, loading, navigate]
   )
   if (loading) {
     return (
       <div>
-        <header/>
+      <Header />
       <main> 
         <p>Initialising User...</p>
       </main> 
-    <footer/>
+    <Footer />
       </div>
     );
   }
   if (error) {
     return (
       <div>
-        <header/>
+      <Header />
         <main>
         <p>Error: {error}</p>
         </main>
-        <footer/>
+<Footer />
       </div>
     );
   }

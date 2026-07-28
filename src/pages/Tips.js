@@ -52,19 +52,17 @@ export default function Tips() {
       <Footer />
     </>
   );
-    if(user){
-      
-        if (user.emailVerified){
-    return (
-      <>
-        <Helmet>
-          <title>Web Dev Roadmap - tips</title>
-        </Helmet>
-  
-        <Header />
-        <Footer />
-      </>
-    );
-        }
-      }
+    if(user && user.emailVerified){
+  return (
+    <>
+      <Helmet>
+        <title>Web Dev Roadmap - Tips</title>
+      </Helmet>
+
+      <Header />
+
+      <Footer />
+    </>
+  );
 }
+      }

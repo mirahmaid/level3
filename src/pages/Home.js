@@ -33,13 +33,12 @@ export default function Home() {
   if(!user){
 return(
 <div>
-  <header/>
+  <Header />
   
 <main className ='auth'>
   <p><Link to ="/Signin">sign in </Link> to continue</p>
 </main> 
-<footer/>
-
+<Footer />
 </div>
 )
 
