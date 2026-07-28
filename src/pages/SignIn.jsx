@@ -17,6 +17,8 @@ export default function SignIn() {
   const [errorr, setErrorr] = useState(false);
   const [MessageError, setMessageError] = useState("");
   const { theme } = useContext(Data);
+    const [resetEmail, setResetEmail] = useState(false);
+
   const [showReset, setShowReset] = useState(false);
   return (
     <div>
@@ -121,10 +123,16 @@ export default function SignIn() {
       placeholder="Enter your email"
     />
 
-    <button>
+    <button onClick={(eo) => {
+      eo.preventDefault()
+      setResetEmail(true);
+
+    }
+    }>
       Reset Password
     </button>
-
+    {resetEmail && <p className ="reset email ">please check your email tp reset your password</p>
+}
   </div>
 )}
 
