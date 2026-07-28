@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { MdLockReset} from "react-icons/md"
 import Data from "../context/Data";
 import "./SignIn.css";
+import { sendPasswordResetEmail } from "firebase/auth";
+
 export default function SignIn() {
   const navigate = useNavigate();
 
@@ -18,40 +20,23 @@ export default function SignIn() {
   const [MessageError, setMessageError] = useState("");
   const { theme } = useContext(Data);
     const [resetEmail, setResetEmail] = useState(false);
-
-  const [showReset, setShowReset] = useState(false);
-  return (
-    <div>
-      <Helmet>
-        <title>Sign in page</title>
-      </Helmet>
-
-      <Header />
-
-      <main>
-        <form>
-        
-          <input
-            onChange={(eo) => {
-              setEmail(eo.target.value);
-            }}
-            required
-            placeholder="email"
-            type="email"
-          />
-
-          <input
-            onChange={(eo) => {
-              setPassword(eo.target.value);
-            }}
-            required
-            placeholder="password"
-            type="password"
-          />
-
-          <button
-            onClick={(eo) => {
-              eo.preventDefault();
+    const [resetPassword, setResetPassword] = useState("");
+  
+  const resetPss = (eo) => {
+      sendPasswordResetEmail(auth, resetPassword)
+  .then(() => {
+    // Password reset email sent!
+    // ..
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  console.log("error")
+  });
+  }
+    const [showReset, setShowReset] = useState(false);
+  const signInBtn = (eo) => {
+      eo.preventDefault();
 
               console.log(email);
               console.log(password);
@@ -90,6 +75,40 @@ export default function SignIn() {
                       setMessageError("enter password");
                   }
                 });
+  }
+  
+  return (
+    <div>
+      <Helmet>
+        <title>Sign in page</title>
+      </Helmet>
+
+      <Header />
+
+      <main>
+        <form>
+        
+          <input
+            onChange={(eo) => {
+              setEmail(eo.target.value);
+            }}
+            required
+            placeholder="email"
+            type="email"
+          />
+
+          <input
+            onChange={(eo) => {
+              setPassword(eo.target.value);
+            }}
+            required
+            placeholder="password"
+            type="password"
+          />
+
+          <button
+            onClick={(eo) => {
+            signInBtn(eo)
             }}
           >
             Sign in
@@ -118,17 +137,18 @@ export default function SignIn() {
 
     <hr />
 
-    <input
+    <input onChange={(eo) => {
+      setResetPassword(eo.target.value);
+    }
+    }
       type="email"
       placeholder="Enter your email"
     />
 
-    <button onClick={(eo) => {
-      eo.preventDefault()
-      setResetEmail(true);
-
+    <button  onClick={(eo) => {
+    resetPss(eo);
     }
-    }>
+    } >
       Reset Password
     </button>
     {resetEmail && <p className ="reset email ">please check your email tp reset your password</p>

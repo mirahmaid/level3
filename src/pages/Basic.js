@@ -10,6 +10,16 @@ import {deleteUser } from "firebase/auth";
 
 export default function Basic() {
         const [user, loading, error] = useAuthState(auth);
+  const deleteBtn = (eo) => {
+    deleteUser(user).then(() => {
+  // User deleted.
+  console.log("user deleted")
+}).catch((error) => {
+  // An error ocurred
+  // ...
+  console.log("error")
+});
+  }
   
   let navigate = useNavigate();
   useEffect(() => {
@@ -69,22 +79,15 @@ export default function Basic() {
 
   </p>
   <button className ="delete"
-  onClick={() => {
-    deleteUser(user).then(() => {
-  // User deleted.
-  console.log("user deleted")
-}).catch((error) => {
-  // An error ocurred
-  // ...
-  console.log("error")
-});
+  onClick={(eo) => {
+    deleteBtn(eo)
   }
   }>Delete account</button>
 
 
 </div>
 </main>
-      <Footer />
+      <Footer  />
     </>
   )}};
 }

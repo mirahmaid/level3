@@ -33,6 +33,59 @@ useEffect(() => {
   
 },[user, navigate]
   )
+  const signUpBtn = (eo) => {
+      eo.preventDefault();
+
+                createUserWithEmailAndPassword(auth, email, password)
+                  .then((userCredential) => {
+                    const authh = getAuth();
+
+                    updateProfile(authh.currentUser, {
+                      displayName: userName,
+                    }).then(() => {
+                      console.log("Profile Updated");
+                    });
+
+                    sendEmailVerification(authh.currentUser).then(() => {
+                      console.log("Verification Email Sent");
+                    });
+
+                    navigate("/");
+                  })
+
+                  .catch((error) => {
+                    console.log("ERROR CODE:", error.code);
+                    console.log("ERROR MESSAGE:", error.message);
+
+                    setErrorr(true);
+
+                    switch (error.code) {
+                      case "auth/invalid-email":
+                        setMessageError("Wrong email");
+                        break;
+
+                      case "auth/email-already-in-use":
+                        setMessageError("Email already in use");
+                        break;
+
+                      case "auth/weak-password":
+                        setMessageError("Weak password");
+                        break;
+
+                      case "auth/missing-password":
+                        setMessageError("Enter password");
+                        break;
+
+                      case "auth/too-many-requests":
+                        setMessageError("Try again later");
+                        break;
+
+                      default:
+                        setMessageError(error.message);
+                    }
+                  });
+  }
+  
   if (loading) {
     return (
       <div>
@@ -120,56 +173,7 @@ if (error) {
 
             <button
               onClick={(eo) => {
-                eo.preventDefault();
-
-                createUserWithEmailAndPassword(auth, email, password)
-                  .then((userCredential) => {
-                    const authh = getAuth();
-
-                    updateProfile(authh.currentUser, {
-                      displayName: userName,
-                    }).then(() => {
-                      console.log("Profile Updated");
-                    });
-
-                    sendEmailVerification(authh.currentUser).then(() => {
-                      console.log("Verification Email Sent");
-                    });
-
-                    navigate("/");
-                  })
-
-                  .catch((error) => {
-                    console.log("ERROR CODE:", error.code);
-                    console.log("ERROR MESSAGE:", error.message);
-
-                    setErrorr(true);
-
-                    switch (error.code) {
-                      case "auth/invalid-email":
-                        setMessageError("Wrong email");
-                        break;
-
-                      case "auth/email-already-in-use":
-                        setMessageError("Email already in use");
-                        break;
-
-                      case "auth/weak-password":
-                        setMessageError("Weak password");
-                        break;
-
-                      case "auth/missing-password":
-                        setMessageError("Enter password");
-                        break;
-
-                      case "auth/too-many-requests":
-                        setMessageError("Try again later");
-                        break;
-
-                      default:
-                        setMessageError(error.message);
-                    }
-                  });
+              signUpBtn(eo)
               }}
             >
               Sign Up

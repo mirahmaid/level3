@@ -7,7 +7,7 @@ import { useContext } from "react";
 import Data from "./context/Data";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-
+import Error404 from "./pages/Error404"
 const router = createBrowserRouter([
     {
     path: "/Signin",
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    errorElement: <h1>Not Found</h1>,
+    errorElement: <Error404/>,
   },
   {
     path: "/Basic",
@@ -33,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/Tips",
     element: <Tips />,
+  },
+    {
+    path: "*",
+    element: <Error404 />,
   },
 ]);
 
